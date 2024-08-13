@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人用Webページ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ももちゃんのギャラリー</h1>
+    </header>
+    <main>
+        
+        <section id="home">
+            <h2>説明</h2>
+            <p>ももちゃんの写真がたくさん流れるスライドショー</p>
+        </section>
+        <section id="upload">
+            <h2>写真のアップロード</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="imageUpload" name="image" accept="image/*" multiple>
+                <button type="submit">アップロード</button>
+            </form>
+        </section>
+        <section id="gallery">
+            <div class="slideshow-container">
+                <!-- 画像27枚を追加 -->
+                <div class="mySlides fade">
+                    <img src="images/image1.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image2.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image3.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image4.jpg" style="width:100%">
+                </div>
+                <!-- 画像を27枚目まで追加 -->
+                <div class="mySlides fade">
+                    <img src="images/image5.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image6.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image7.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image8.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image9.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image10.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image11.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image12.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image13.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image14.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image15.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image16.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image17.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image18.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image19.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image20.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image21.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image22.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image23.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image24.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image25.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image26.jpg" style="width:100%">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/image27.jpg" style="width:100%">
+                </div>
+                <!-- 前へ次へボタン -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+            <!-- 各スライドのサムネイル -->
+            <div style="text-align:center">
+                <!-- ドットを27個追加 -->
+                <span class="dot" onclick="currentSlide(1)"></span> 
+                <span class="dot" onclick="currentSlide(2)"></span> 
+                <span class="dot" onclick="currentSlide(3)"></span> 
+                <span class="dot" onclick="currentSlide(4)"></span> 
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
+                <span class="dot" onclick="currentSlide(9)"></span>
+                <span class="dot" onclick="currentSlide(10)"></span>
+                <span class="dot" onclick="currentSlide(11)"></span>
+                <span class="dot" onclick="currentSlide(12)"></span>
+                <span class="dot" onclick="currentSlide(13)"></span>
+                <span class="dot" onclick="currentSlide(14)"></span>
+                <span class="dot" onclick="currentSlide(15)"></span>
+                <span class="dot" onclick="currentSlide(16)"></span>
+                <span class="dot" onclick="currentSlide(17)"></span>
+                <span class="dot" onclick="currentSlide(18)"></span>
+                <span class="dot" onclick="currentSlide(19)"></span>
+                <span class="dot" onclick="currentSlide(20)"></span>
+                <span class="dot" onclick="currentSlide(21)"></span>
+                <span class="dot" onclick="currentSlide(22)"></span>
+                <span class="dot" onclick="currentSlide(23)"></span>
+                <span class="dot" onclick="currentSlide(24)"></span>
+                <span class="dot" onclick="currentSlide(25)"></span>
+                <span class="dot" onclick="currentSlide(26)"></span>
+                <span class="dot" onclick="currentSlide(27)"></span> 
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
