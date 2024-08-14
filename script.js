@@ -7,6 +7,7 @@ function initGallery() {
     dots = document.getElementsByClassName("dot");
     showSlides(slideIndex);
     addHoverListeners();
+    createDots();
 }
 
 function addHoverListeners() {
@@ -18,6 +19,17 @@ function addHoverListeners() {
             slides[i].querySelector('.image-description').style.opacity = '0';
         });
     }
+}
+
+function createDots() {
+    let dotContainer = document.querySelector('.dot-container');
+    for (let i = 0; i < slides.length; i++) {
+        let dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.onclick = function() { currentSlide(i + 1); };
+        dotContainer.appendChild(dot);
+    }
+    dots = document.getElementsByClassName("dot");
 }
 
 function plusSlides(n) {
@@ -95,7 +107,7 @@ function updateGallery(newImages) {
         description.textContent = '新しい画像 ' + (index + 1);
         slide.appendChild(description);
         
-        slideshowContainer.appendChild(slide);
+        slideshowContainer.insertBefore(slide, slideshowContainer.lastElementChild);
         
         var dot = document.createElement('span');
         dot.className = 'dot';
