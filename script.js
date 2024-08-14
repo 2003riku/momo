@@ -1,89 +1,40 @@
+let slideIndex = 0;
 let slides;
 let dots;
-let slideIndices = [];
-let currentIndex = 0;
 let timeoutId;
 
 function initSlideshow() {
     slides = document.getElementsByClassName("mySlides");
     dots = document.getElementsByClassName("dot");
-    resetSlideIndices();
-    showNextSlide();
+    showSlides();
 }
 
-function resetSlideIndices() {
-    slideIndices = Array.from({length: slides.length}, (_, i) => i);
-    shuffleArray(slideIndices);
-    currentIndex = 0;
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+function showSlides() {
+    let i;
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
     }
-}
-
-function showNextSlide() {
-    if (slides.length === 0) return;
-
-    // 全てのスライドを非表示にする
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-
-    // 全てのドットからactiveクラスを削除
-    for (let i = 0; i < dots.length; i++) {
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    for (i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
-
-    // 次のスライドを表示
-    let slideIndex = slideIndices[currentIndex];
-    slides[slideIndex].style.display = "block";
-    dots[slideIndex].className += " active";
-
-    // インデックスを進める
-    currentIndex++;
-    if (currentIndex >= slides.length) {
-        resetSlideIndices();
-    }
-
-    // 3秒後に次のスライドを表示
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(showNextSlide, 3000);
+    timeoutId = setTimeout(showSlides, 3000); // 3秒ごとに変更
 }
 
 function plusSlides(n) {
     clearTimeout(timeoutId);
-    currentIndex += n;
-    if (currentIndex >= slides.length) {
-        currentIndex = 0;
-    } else if (currentIndex < 0) {
-        currentIndex = slides.length - 1;
-    }
-    showSlide(slideIndices[currentIndex]);
+    slideIndex += n - 1;
+    showSlides();
 }
 
 function currentSlide(n) {
     clearTimeout(timeoutId);
-    let index = slideIndices.indexOf(n - 1);
-    if (index !== -1) {
-        currentIndex = index;
-    }
-    showSlide(n - 1);
-}
-
-function showSlide(n) {
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (let i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[n].style.display = "block";
-    dots[n].className += " active";
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(showNextSlide, 3000);
+    slideIndex = n - 1;
+    showSlides();
 }
 
 // イベントリスナーを追加
@@ -101,35 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ページ読み込み時にスライドショーを初期化
 window.onload = initSlideshow;
-
-function updateSlideshow(newImages) {
-    var slideshowContainer = document.querySelector('.slideshow-container');
-    var dotsContainer = document.querySelector('.dot-container');
-    
-    newImages.forEach((src, index) => {
-        var slide = document.createElement('div');
-        slide.className = 'mySlides fade';
-        var img = document.createElement('img');
-        img.src = src;
-        img.style.width = '100%';
-        slide.appendChild(img);
-        slideshowContainer.appendChild(slide);
-        
-        var dot = document.createElement('span');
-        dot.className = 'dot';
-        dot.onclick = function() { currentSlide(slideshowContainer.children.length); };
-        dotsContainer.appendChild(dot);
-    });
-    
-    // スライドとドットの参照を更新
-    slides = document.getElementsByClassName("mySlides");
-    dots = document.getElementsByClassName("dot");
-    
-    // スライドショーを更新
-    clearTimeout(timeoutId);
-    resetSlideIndices();
-    showNextSlide();
-}
 
 document.getElementById('uploadForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -163,3 +85,31 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
         alert('アップロードがキャンセルされました。');
     }
 });
+
+function updateSlideshow(newImages) {
+    var slideshowContainer = document.querySelector('.slideshow-container');
+    var dotsContainer = document.querySelector('.dot-container');
+    
+    newImages.forEach((src, index) => {
+        var slide = document.createElement('div');
+        slide.className = 'mySlides fade';
+        var img = document.createElement('img');
+        img.src = src;
+        img.style.width = '100%';
+        slide.appendChild(img);
+        slideshowContainer.appendChild(slide);
+        
+        var dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.onclick = function() { currentSlide(slides.length); };
+        dotsContainer.appendChild(dot);
+    });
+    
+    // スライドとドットの参照を更新
+    slides = document.getElementsByClassName("mySlides");
+    dots = document.getElementsByClassName("dot");
+    
+    // スライドショーを更新
+    clearTimeout(timeoutId);
+    showSlides();
+}
