@@ -94,34 +94,34 @@ img {
     width: 100%;
 }
 
-.prev, .next {
+.nav-button {
     cursor: pointer;
     position: absolute;
     top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
     color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    background-color: rgba(0,0,0,0.8);
+    border: none;
+    font-size: 24px;
+    padding: 16px;
+    transition: all 0.3s ease;
     z-index: 2;
 }
 
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
 .prev {
-    left: 0;
+    left: 10px;
 }
 
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.9);
+.next {
+    right: 10px;
+}
+
+.nav-button:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.nav-button i {
+    display: block;
 }
 
 .dot {
