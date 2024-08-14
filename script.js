@@ -7,18 +7,20 @@ let isHovered = false;
 function initSlideshow() {
     slides = document.getElementsByClassName("mySlides");
     dots = document.getElementsByClassName("dot");
+    addHoverListeners();
     showSlides();
-    
-    // ホバーイベントリスナーを追加
+}
+
+function addHoverListeners() {
     for (let i = 0; i < slides.length; i++) {
         slides[i].addEventListener('mouseenter', () => {
             isHovered = true;
             clearTimeout(timeoutId);
-            slides[i].classList.add('paused');
+            slides[i].querySelector('.image-description').style.opacity = '1';
         });
         slides[i].addEventListener('mouseleave', () => {
             isHovered = false;
-            slides[i].classList.remove('paused');
+            slides[i].querySelector('.image-description').style.opacity = '0';
             timeoutId = setTimeout(showSlides, 3000);
         });
     }
@@ -55,19 +57,6 @@ function currentSlide(n) {
     slideIndex = n - 1;
     showSlides();
 }
-
-// イベントリスナーを追加
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.mySlides').forEach(slide => {
-        slide.addEventListener('touchstart', function() {
-            this.classList.add('hover');
-        }, {passive: true});
-        
-        slide.addEventListener('touchend', function() {
-            this.classList.remove('hover');
-        }, {passive: true});
-    });
-});
 
 // ページ読み込み時にスライドショーを初期化
 window.onload = initSlideshow;
@@ -134,19 +123,8 @@ function updateSlideshow(newImages) {
     slides = document.getElementsByClassName("mySlides");
     dots = document.getElementsByClassName("dot");
     
-    // ホバーイベントリスナーを新しいスライドに追加
-    for (let i = slides.length - newImages.length; i < slides.length; i++) {
-        slides[i].addEventListener('mouseenter', () => {
-            isHovered = true;
-            clearTimeout(timeoutId);
-            slides[i].classList.add('paused');
-        });
-        slides[i].addEventListener('mouseleave', () => {
-            isHovered = false;
-            slides[i].classList.remove('paused');
-            timeoutId = setTimeout(showSlides, 3000);
-        });
-    }
+    // 新しいスライドにホバーイベントリスナーを追加
+    addHoverListeners();
     
     // スライドショーを更新
     clearTimeout(timeoutId);
