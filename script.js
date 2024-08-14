@@ -125,3 +125,35 @@ function updateGallery(newImages) {
     // ギャラリーを更新
     showSlides(slideIndex);
 }
+// ... 既存のJavaScript ...
+
+// ライトボックスを開く関数
+function openLightbox(img) {
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImg = document.getElementById("lightbox-img");
+    var captionText = document.getElementById("lightbox-caption");
+    
+    lightbox.style.display = "block";
+    lightboxImg.src = img.src;
+    captionText.innerHTML = img.nextElementSibling.innerHTML;
+}
+
+// ライトボックスを閉じる関数
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
+
+// ESCキーでライトボックスを閉じる
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+        closeLightbox();
+    }
+});
+
+// ライトボックスの外側をクリックして閉じる
+window.onclick = function(event) {
+    var lightbox = document.getElementById("lightbox");
+    if (event.target === lightbox) {
+        closeLightbox();
+    }
+}
