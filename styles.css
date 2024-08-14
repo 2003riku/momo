@@ -206,3 +206,31 @@ img {
 .gallery-item:hover .overlay {
     opacity: 1;
 }
+
+/* 既存のCSSコードに以下を追加します */
+
+.mySlides {
+    position: relative;
+}
+
+.image-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* これにより、説明テキストがマウスイベントを妨げません */
+}
+
+.mySlides:hover .image-description {
+    opacity: 1;
+}
+
+.paused {
+    animation-play-state: paused;
+}
