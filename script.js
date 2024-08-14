@@ -1,15 +1,30 @@
 let slides;
 let dots;
-let slideIndex = 0;
+let slideIndices = [];
+let currentIndex = 0;
 let timeoutId;
 
 function initSlideshow() {
     slides = document.getElementsByClassName("mySlides");
     dots = document.getElementsByClassName("dot");
-    showRandomSlide();
+    resetSlideIndices();
+    showNextSlide();
 }
 
-function showRandomSlide() {
+function resetSlideIndices() {
+    slideIndices = Array.from({length: slides.length}, (_, i) => i);
+    shuffleArray(slideIndices);
+    currentIndex = 0;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function showNextSlide() {
     if (slides.length === 0) return;
 
     // 全てのスライドを非表示にする
@@ -22,31 +37,39 @@ function showRandomSlide() {
         dots[i].className = dots[i].className.replace(" active", "");
     }
 
-    // ランダムなインデックスを生成
-    slideIndex = Math.floor(Math.random() * slides.length);
-
-    // 選択されたスライドを表示
+    // 次のスライドを表示
+    let slideIndex = slideIndices[currentIndex];
     slides[slideIndex].style.display = "block";
     dots[slideIndex].className += " active";
 
-    // 3秒後に次のランダムスライドを表示
-    clearTimeout(timeoutId);  // 既存のタイマーをクリア
-    timeoutId = setTimeout(showRandomSlide, 3000);
+    // インデックスを進める
+    currentIndex++;
+    if (currentIndex >= slides.length) {
+        resetSlideIndices();
+    }
+
+    // 3秒後に次のスライドを表示
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(showNextSlide, 3000);
 }
 
 function plusSlides(n) {
     clearTimeout(timeoutId);
-    slideIndex += n;
-    if (slideIndex >= slides.length) {
-        slideIndex = 0;
-    } else if (slideIndex < 0) {
-        slideIndex = slides.length - 1;
+    currentIndex += n;
+    if (currentIndex >= slides.length) {
+        currentIndex = 0;
+    } else if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
     }
-    showSlide(slideIndex);
+    showSlide(slideIndices[currentIndex]);
 }
 
 function currentSlide(n) {
     clearTimeout(timeoutId);
+    let index = slideIndices.indexOf(n - 1);
+    if (index !== -1) {
+        currentIndex = index;
+    }
     showSlide(n - 1);
 }
 
@@ -59,8 +82,8 @@ function showSlide(n) {
     }
     slides[n].style.display = "block";
     dots[n].className += " active";
-    clearTimeout(timeoutId);  // 既存のタイマーをクリア
-    timeoutId = setTimeout(showRandomSlide, 3000);
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(showNextSlide, 3000);
 }
 
 // イベントリスナーを追加
@@ -104,7 +127,8 @@ function updateSlideshow(newImages) {
     
     // スライドショーを更新
     clearTimeout(timeoutId);
-    showRandomSlide();
+    resetSlideIndices();
+    showNextSlide();
 }
 
 document.getElementById('uploadForm').addEventListener('submit', function(e) {
