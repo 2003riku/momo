@@ -1,65 +1,49 @@
-let slideIndex = 0;
+let slideIndex = 1;
 let slides;
 let dots;
-let timeoutId;
-let isHovered = false;
 
-function initSlideshow() {
+function initGallery() {
     slides = document.getElementsByClassName("mySlides");
     dots = document.getElementsByClassName("dot");
+    showSlides(slideIndex);
     addHoverListeners();
-    showSlides();
 }
 
 function addHoverListeners() {
     for (let i = 0; i < slides.length; i++) {
         slides[i].addEventListener('mouseenter', () => {
-            isHovered = true;
-            clearTimeout(timeoutId);
             slides[i].querySelector('.image-description').style.opacity = '1';
         });
         slides[i].addEventListener('mouseleave', () => {
-            isHovered = false;
             slides[i].querySelector('.image-description').style.opacity = '0';
-            timeoutId = setTimeout(showSlides, 3000);
         });
     }
 }
 
-function showSlides() {
-    if (isHovered) return;
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
 
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
     let i;
+    if (n > slides.length) {slideIndex = 1}    
+    if (n < 1) {slideIndex = slides.length}
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";  
     }
-    slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}    
     for (i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
     slides[slideIndex-1].style.display = "block";  
     dots[slideIndex-1].className += " active";
-    clearTimeout(timeoutId);
-    if (!isHovered) {
-        timeoutId = setTimeout(showSlides, 3000); // 3秒ごとに変更
-    }
 }
 
-function plusSlides(n) {
-    clearTimeout(timeoutId);
-    slideIndex += n - 1;
-    showSlides();
-}
-
-function currentSlide(n) {
-    clearTimeout(timeoutId);
-    slideIndex = n - 1;
-    showSlides();
-}
-
-// ページ読み込み時にスライドショーを初期化
-window.onload = initSlideshow;
+// ページ読み込み時にギャラリーを初期化
+window.onload = initGallery;
 
 document.getElementById('uploadForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -86,7 +70,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
         // 注: 実際のサーバー通信の代わりに、ローカルでの処理をシミュレート
         setTimeout(() => {
             var newImages = Array.from(imageFiles).map(file => URL.createObjectURL(file));
-            updateSlideshow(newImages);
+            updateGallery(newImages);
             alert('画像のアップロードが完了しました。');
         }, 1000);
     } else {
@@ -94,7 +78,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
     }
 });
 
-function updateSlideshow(newImages) {
+function updateGallery(newImages) {
     var slideshowContainer = document.querySelector('.slideshow-container');
     var dotsContainer = document.querySelector('.dot-container');
     
@@ -126,7 +110,6 @@ function updateSlideshow(newImages) {
     // 新しいスライドにホバーイベントリスナーを追加
     addHoverListeners();
     
-    // スライドショーを更新
-    clearTimeout(timeoutId);
-    showSlides();
+    // ギャラリーを更新
+    showSlides(slideIndex);
 }
