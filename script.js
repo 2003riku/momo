@@ -30,6 +30,7 @@ function showRandomSlide() {
     dots[slideIndex].className += " active";
 
     // 3秒後に次のランダムスライドを表示
+    clearTimeout(timeoutId);  // 既存のタイマーをクリア
     timeoutId = setTimeout(showRandomSlide, 3000);
 }
 
@@ -58,6 +59,7 @@ function showSlide(n) {
     }
     slides[n].style.display = "block";
     dots[n].className += " active";
+    clearTimeout(timeoutId);  // 既存のタイマーをクリア
     timeoutId = setTimeout(showRandomSlide, 3000);
 }
 
